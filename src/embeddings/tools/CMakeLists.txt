@@ -18,8 +18,8 @@ target_link_libraries(meta-to-glove meta-util
                                     meta-io
                                     cpptoml)
 
-add_executable(word2vec word2vec.cpp)
-target_link_libraries(word2vec meta-embeddings)
+add_executable(skipgram skipgram.cpp)
+target_link_libraries(skipgram meta-embeddings)
 
 add_executable(distance distance.cpp)
 target_link_libraries(distance meta-embeddings)

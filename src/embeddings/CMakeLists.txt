@@ -3,7 +3,7 @@ project(meta-embeddings)
 add_subdirectory(tools)
 add_subdirectory(analyzers)
 
-add_library(meta-embeddings cooccurrence_counter.cpp word_embeddings.cpp tools/word2vec.cpp)
+add_library(meta-embeddings cooccurrence_counter.cpp word_embeddings.cpp tools/skipgram.cpp)
 target_link_libraries(meta-embeddings cpptoml meta-analyzers meta-util meta-io)
 
 install(TARGETS meta-embeddings
