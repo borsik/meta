@@ -18,6 +18,7 @@ struct vocabularyElement {
     long long wordFrequency;
     int *point;
     char *word, *code;
+    float rand_frac;
 };
 
 char train_file[STRING_LIMIT], output_file[STRING_LIMIT];
@@ -228,6 +229,10 @@ void LearnVocabFromTrainFile() {
     if (vocabularySize > vocabularyHashSize * 0.7) ReduceVocab();
   }
   SortVocab();
+
+  for (a = 1; a < vocabularySize; a++) {
+    vocabulary[a].rand_frac = (sqrt(vocabulary[a].wordFrequency / (sample * train_words)) + 1) * (sample * train_words) / vocabulary[a].wordFrequency;
+  }
   if (debug_mode > 0) {
     printf("Vocab size: %lld\n", vocabularySize);
     printf("Words in train file: %lld\n", train_words);
@@ -354,9 +359,9 @@ void TrainModel() {
           if (word == 0) break;
           // The subsampling randomly discards frequent words while keeping the ranking same
           if (sample > 0) {
-            float ran = (sqrt(vocabulary[word].wordFrequency / (sample * train_words)) + 1) * (sample * train_words) / vocabulary[word].wordFrequency;
+            //float ran = (sqrt(vocabulary[word].wordFrequency / (sample * train_words)) + 1) * (sample * train_words) / vocabulary[word].wordFrequency;
             next_random = next_random * (unsigned long long)25214903917 + 11;
-            if (ran < (next_random & 0xFFFF) / (float)65536) continue;
+            if (vocabulary[word].rand_frac < (next_random & 0xFFFF) / (float)65536) continue;
           }
           sen[sentence_length] = word;
           sentence_length++;
