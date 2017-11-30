@@ -101,3 +101,12 @@ vector-size = 50
 [embeddings.vocab]
 min-count = 10
 max-size = 500000
+
+[embeddings.skip-gram]
+train_file = "../data/text8"
+output_file = "../data/text8-vector.bin"
+features = 200
+window = 5
+negative = 5
+sample = 1e-3
+binary = 1
